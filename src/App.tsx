@@ -1,6 +1,5 @@
 import { BoxDiv, CustomSnackbar, StyledDiv } from "./App.styled.tsx";
 import { useForm } from "react-hook-form";
-import Snackbar from "./Snackbar.tsx";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import * as React from "react";
 import { useSnackbar } from "@mui/base/useSnackbar";
@@ -37,6 +36,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     const responseJson = await response.json();
     console.log(responseJson);
@@ -58,6 +58,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     const responseJson = await response.json();
     if (response.status === 200) {
@@ -71,6 +72,10 @@ function App() {
   const handleLogout = async () => {
     const response = await fetch("http://localhost:5000/auth/logout", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
     });
     const responseJson = await response;
     if (response.status === 200) {
