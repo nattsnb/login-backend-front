@@ -4,6 +4,7 @@ import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import * as React from "react";
 import { useSnackbar } from "@mui/base/useSnackbar";
 import { useState } from "react";
+import { Box } from "@mui/material";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -86,6 +87,21 @@ function App() {
     handleOpen();
   };
 
+  const handleGetMe = async () => {
+    const response = await fetch("http://localhost:5000/auth/me", {
+      method: "GET",
+      credentials: "include",
+    });
+    const userData = await response.json();
+    console.log(userData);
+    if (response.status === 200) {
+      setSnackbarMessage(`${userData.nickname} is logged in.`);
+    } else {
+      setSnackbarMessage(`No logged in user.`);
+    }
+    handleOpen();
+  };
+
   return (
     <>
       <StyledDiv>
@@ -140,6 +156,9 @@ function App() {
             <button type="submit">Login user</button>
           </form>
           <button onClick={handleLogout}>Logout user</button>
+        </BoxDiv>
+        <BoxDiv>
+          <button onClick={handleGetMe}>Get me</button>
         </BoxDiv>
       </StyledDiv>
       {open ? (
